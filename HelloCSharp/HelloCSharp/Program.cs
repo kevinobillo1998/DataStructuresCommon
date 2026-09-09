@@ -79,6 +79,10 @@ public class Hello
         MyString third = new MyString("Three");
         Console.WriteLine("First compareto second is {0}", first.CompareTo(second));
         Console.WriteLine("Is First > Second? {0}", first > second);
+
+        EchoChamber myEcho = new EchoChamber(5);
+        string echoed = myEcho.Echo("Hello");
+        Console.WriteLine(echoed);
     }
 
     public static void SwapMyStrings(MyString left, MyString right)
