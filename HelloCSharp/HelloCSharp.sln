@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloCSharp", "HelloCSharp\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyClasses", "MyClasses\MyClasses.csproj", "{0FF21B2F-0016-480F-85C3-F4D0CA33D81E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProjectHello", "TestProjectHello\TestProjectHello.csproj", "{C75956E4-6F92-4BDC-B56D-1CB0BBAAD9D4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{0FF21B2F-0016-480F-85C3-F4D0CA33D81E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0FF21B2F-0016-480F-85C3-F4D0CA33D81E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0FF21B2F-0016-480F-85C3-F4D0CA33D81E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C75956E4-6F92-4BDC-B56D-1CB0BBAAD9D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C75956E4-6F92-4BDC-B56D-1CB0BBAAD9D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C75956E4-6F92-4BDC-B56D-1CB0BBAAD9D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C75956E4-6F92-4BDC-B56D-1CB0BBAAD9D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
