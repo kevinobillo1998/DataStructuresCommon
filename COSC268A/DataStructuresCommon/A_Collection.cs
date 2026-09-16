@@ -27,7 +27,7 @@ public abstract class A_Collection<T>: I_Collection<T> where T: IComparable<T>
                 count++;
             }
             return count;
-
+            
         }
     }
 
