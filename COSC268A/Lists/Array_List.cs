@@ -42,7 +42,7 @@ public class Array_List<T>: A_List<T> where T : IComparable<T>
 
     public override void Clear()
     {
-        throw new NotImplementedException();
+        values = new T[0];
     }
 
     public override IEnumerator<T> GetEnumerator()
@@ -50,24 +50,131 @@ public class Array_List<T>: A_List<T> where T : IComparable<T>
         return new Enumerator(this);
     }
 
+    public override int IndexOf(T data)
+    {
+        //For index of we'll just iterate through the array until we find the item
+        // were looking for
+        for (int i = 0; i < values.Length; i++)
+        {
+            if (data.Equals(values[i]))
+            {
+                return i;
+            }
+        }
+        throw new ApplicationException("Could not find item " + data + " in the list");
+
+    }
+
     public override void Insert(int index, T data)
     {
-        throw new NotImplementedException();
+        // Make a new bigger array
+        // Loop through the old array, copying values over
+
+        //T[] newValues = new T[values.Length + 1];
+
+        //int j = 0; // the index for the new array
+
+        //// "i" is the index for the old array
+        //for (int i = 0; i < values.Length; i++)
+        //{
+        //    if (i < index)
+        //    {
+        //        newValues[i] = values[i];
+        //    }
+        //    else if (i == index)
+        //    {
+        //        newValues[i] = data;
+        //    }
+        //    else
+        //    {
+        //        newValues[i] = values[i - 1];
+        //    }
+        //}
+
+        //values = newValues;
+
+
+        if ( index < 0 || index >= values.Length)
+        {
+            throw new IndexOutOfRangeException("Index " + index + " out of range of the list");
+        }
+
+        //Wades solution
+        T[] newValues = new T[values.Length + 1];
+
+        int j = 0; // the index for the new array
+
+        // "i" is the index for the old array
+        for (int i = 0; i < values.Length; i++)
+        {
+
+            // when you get to the insertion index, add the new value
+            // (After this point, the indexes in the old array, amd new array will
+            //If were at the insertion point, we'll do something different:
+            if (i == index)
+            {
+                newValues[j] = data;
+                j++;
+            }
+
+            newValues[j] = values[i];
+            j++;
+        }
+
+        values = newValues;
     }
 
     public override bool Remove(T data)
     {
-        throw new NotImplementedException();
+        try
+        {
+            int indexOfElementToRemove = IndexOf(data);
+            RemoveAt(indexOfElementToRemove);
+            return true;
+        }
+        catch (ApplicationException e)
+        {
+
+            return false;
+        }
     }
 
     public override T RemoveAt(int index)
     {
-        throw new NotImplementedException();
+        //Keep track of the element removed (because we need to return it)
+        T data = default(T);
+        //T tReturn = default(T);
+
+        //Create a new array one shorter than the last one
+        T[] rtnArray = new T[values.Length - 1];
+
+        int j = 0;
+
+        //Loop through the old array copying every value except the one being replaced
+        for (int i = 0; i < values.Length; i++)
+        {
+            if(i == index) 
+            {
+                data = values[i]; 
+            }
+            else
+            {
+                rtnArray[j++] = values[i];
+            }
+        }
+
+        //Dont forget to set values to the new array
+        values = rtnArray;
+
+        //Return the item that was removed
+        return data;
     }
 
     public override T ReplaceAt(int index, T data)
     {
-        throw new NotImplementedException();
+        T tReturn = values[index];
+        values[index] = data;
+        return tReturn;
     }
 
     private class Enumerator : IEnumerator<T>
