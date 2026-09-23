@@ -42,6 +42,7 @@ public class Array_List<T>: A_List<T> where T : IComparable<T>
 
     public override void Clear()
     {
+        //Clearing arrays
         values = new T[0];
     }
 
@@ -70,36 +71,11 @@ public class Array_List<T>: A_List<T> where T : IComparable<T>
         // Make a new bigger array
         // Loop through the old array, copying values over
 
-        //T[] newValues = new T[values.Length + 1];
-
-        //int j = 0; // the index for the new array
-
-        //// "i" is the index for the old array
-        //for (int i = 0; i < values.Length; i++)
-        //{
-        //    if (i < index)
-        //    {
-        //        newValues[i] = values[i];
-        //    }
-        //    else if (i == index)
-        //    {
-        //        newValues[i] = data;
-        //    }
-        //    else
-        //    {
-        //        newValues[i] = values[i - 1];
-        //    }
-        //}
-
-        //values = newValues;
-
-
-        if ( index < 0 || index >= values.Length)
+        if(index < 0 || index >= values.Length)
         {
             throw new IndexOutOfRangeException("Index " + index + " out of range of the list");
         }
 
-        //Wades solution
         T[] newValues = new T[values.Length + 1];
 
         int j = 0; // the index for the new array
@@ -107,21 +83,51 @@ public class Array_List<T>: A_List<T> where T : IComparable<T>
         // "i" is the index for the old array
         for (int i = 0; i < values.Length; i++)
         {
-
-            // when you get to the insertion index, add the new value
-            // (After this point, the indexes in the old array, amd new array will
-            //If were at the insertion point, we'll do something different:
-            if (i == index)
+            if (i < index)
             {
-                newValues[j] = data;
-                j++;
+                newValues[i] = values[i];
             }
-
-            newValues[j] = values[i];
-            j++;
+            else if (i == index)
+            {
+                newValues[i] = data;
+            }
+            else
+            {
+                newValues[i] = values[i - 1];
+            }
         }
 
         values = newValues;
+
+
+        //if ( index < 0 || index >= values.Length)
+        //{
+        //    throw new IndexOutOfRangeException("Index " + index + " out of range of the list");
+        //}
+
+        ////Wades solution
+        //T[] newValues = new T[values.Length + 1];
+
+        //int j = 0; // the index for the new array
+
+        //// "i" is the index for the old array
+        //for (int i = 0; i < values.Length; i++)
+        //{
+
+        //    // when you get to the insertion index, add the new value
+        //    // (After this point, the indexes in the old array, amd new array will
+        //    //If were at the insertion point, we'll do something different:
+        //    if (i == index)
+        //    {
+        //        newValues[j] = data;
+        //        j++;
+        //    }
+
+        //    newValues[j] = values[i];
+        //    j++;
+        //}
+
+        //values = newValues;
     }
 
     public override bool Remove(T data)
