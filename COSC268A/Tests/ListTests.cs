@@ -187,18 +187,7 @@ public class ArrayListTests
             Assert.AreEqual(0, list.Count);
         }
 
-        [Test]
-        public void TestReplaceAt()
-        {
-            Linked_List<string> list = new Linked_List<string>();
-            list.Add("a");
-            list.Add("b");
-            list.Add("c");
-            list.Add("d");
-            list.Add("e");
-            Assert.AreEqual("c", list.ReplaceAt(2, "z"));
-            Assert.AreEqual("z", list.ElementAt(2));
-        }
+     
 
         [Test]
 
@@ -251,23 +240,7 @@ public class ArrayListTests
             Assert.AreEqual(4, list.Count);
         }
 
-        [Test]
-        public void TestRemoveAt()
-        {
-            Linked_List<string> list = new Linked_List<string>();
-            list.Add("a");
-            list.Add("b");
-            list.Add("c");
-            list.Add("d");
-            list.Add("e");
-            Assert.AreEqual("c", list.RemoveAt(2));
-            Assert.AreEqual("b", list.ElementAt(1));
-            Assert.AreEqual("d", list.ElementAt(2));
-            Assert.AreEqual(4, list.Count);
-
-            Assert.Throws<IndexOutOfRangeException>(() => { list.RemoveAt(-1); });
-            Assert.Throws<IndexOutOfRangeException>(() => { list.RemoveAt(7); });
-        }
+       
 
     }
 

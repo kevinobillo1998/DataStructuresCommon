@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BinarySearchTrees\BinarySearchTrees.csproj" />
     <ProjectReference Include="..\DataStructuresCommon\DataStructuresCommon.csproj" />
     <ProjectReference Include="..\Lists\Lists.csproj" />
   </ItemGroup>

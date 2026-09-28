@@ -80,8 +80,119 @@ public class Linked_List<T> : A_List<T> where T : IComparable<T>
 
     public override void Insert(int index, T data)
     {
-        throw new NotImplementedException();
+        //Whether we're doing it recursively or iteratively, we need to:
+
+        //Progress forward through the list until we find
+        // where to insert the new item
+        // then we need to make the parent of the node at the position
+        //were inserting in the NeW NODE be its next node
+        // and make our new nodes next be the old next of the parent
+
+        //First it is easiest to do a bound check
+        if (index < 0 || index > this.Count)
+        {
+            throw new IndexOutOfRangeException("Index " + index + " is out of bounds");
+        }
+
+        //My solution
+        //Special case for pointer to point to the head of the list (1st Node)
+        //or If were trying to instert 
+        if (index == 0)
+        {
+            Node node = head;
+        }
+
+        Node current = head;
+        int listIndex = 0;
+
+        while (current != null && listIndex < index - 1)
+        {
+            current = current.next;
+            listIndex++;
+        }
+
+        Node newNode = new Node(data);
+
+        newNode.next = current.next;
+
+        current.next = newNode;
+
+
+        //Wade Solution
+        //First we'll do a look ahead recursive solution
+        // We're going to treat current node as the parent, and we're
+        // Looking ahead to see if we need to insert into the next position
+        // If were inserting at 0, I have to treat head as a special case
+        //if (index == 0)
+        //{
+        //    head = new Node(data, head);
+        //}
+        //else
+        //{
+        //    recInsert(index, head, data);
+        //}
+
+        //If we were to do this not looking ahead, we'd
+        //Have to either pass using ref or rebuild the list so we can keep track
+        //of changed references:
+        //head = recInsert(index, head, data);
     }
+
+    //Reference Method for recinsert
+    private Node recInsert(int index, Node current, T data)
+    {
+        //Base case is if we're inserting in the current position:
+        //Special case if were trying to insert at 0
+        if(index ==0)
+        {
+            current = new Node(data, current);
+        }
+        else
+        {
+            current.next = recInsert(--index, current.next, data);
+        }
+        return current;
+    }
+
+    //Look ahead recursive method
+    //private void recInsert(int index, Node current, T data)
+    //{
+    //    //Were looking ahead,
+    //    //So my base case is if the insert potsition is the *next* position
+    //    //If it is, create a new node whose next is the current node's next
+    //    // and make the current nodes next the new node:
+    //    if(index == 1)
+    //    {
+    //        current.next = new Node(data, current.next);
+    //    }
+    //    //Otherwiuse Ill decrement the index and recurse on the next node:
+    //    else
+    //    {
+    //        recInsert(--index, current.next, data);
+    //    }
+    //}
+
+
+    public override int IndexOf(T data)
+    {
+        Node current = head;
+        int index = 0;
+        while (current != null)
+        {
+            //If webe found a match:
+            if (current.data.CompareTo(data) == 0)
+            {
+                //return the index;
+                return index;
+            }
+            //Otherwise, just go ahead to the next node:
+            index++;
+            current = current.next;
+        }
+
+        throw new ApplicationException("Could not find item " + data + " in The List");
+    }
+
 
     //public override bool Remove(T data)
     //{
@@ -143,6 +254,7 @@ public class Linked_List<T> : A_List<T> where T : IComparable<T>
     {
         //we'll need to keep track of whether or not the node was found and remove
         bool bRemoved = false;
+
         //We'll have two base cases to consider:
         //One base case is current is null, which means the item isnt present and
         //cant be removed
@@ -150,23 +262,20 @@ public class Linked_List<T> : A_List<T> where T : IComparable<T>
         {
             bRemoved = false;
         }
-
-       else if(current.data.CompareTo(data) == 0)
+        // The other base case if we've FOUND the item to revome
+        else if (current.data.CompareTo(data) == 0)
         {
-            
+            // Cut out the item to remove
             current = current.next;
+            // If weve found it, mark that we've found it
             bRemoved = true;
         }
         else
         {
+            //If neither of those base cases were met, recurse on the next node
             bRemoved = recRemove(ref current.next, data);
         }
-            // The other base case if we've FOUND the item to revome
-            // If weve found it, mark that we've found it
-            // Cut out the item to remove
-            //If neither of those base cases were met, recurse on the next node
-            // We always retyrn whether or nit we were able to remove it eventually
-
+         // We always retyrn whether or nit we were able to remove it eventually
          return bRemoved;
     }
 
@@ -179,6 +288,8 @@ public class Linked_List<T> : A_List<T> where T : IComparable<T>
     {
         throw new NotImplementedException();
     }
+
+
     /// <summary>
     /// A single node in a linked list which stores data of Type T
     /// </summary>

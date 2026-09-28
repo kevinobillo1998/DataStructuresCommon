@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35931.197 d17.13
+VisualStudioVersion = 17.13.35931.197
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataStructuresCommon", "DataStructuresCommon\DataStructuresCommon.csproj", "{90E355B5-E8BE-4C6D-8A12-719AF079CE21}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lists", "Lists\Lists.csproj", "{69EE5A41-C8D3-49FA-B9D9-18F365F125A7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{F3B9CBEA-6DDF-4732-85F9-6CCAD58D438A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinarySearchTrees", "BinarySearchTrees\BinarySearchTrees.csproj", "{B92D2381-0D5F-4B45-B0FA-CF0F85A5D9E8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{F3B9CBEA-6DDF-4732-85F9-6CCAD58D438A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3B9CBEA-6DDF-4732-85F9-6CCAD58D438A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3B9CBEA-6DDF-4732-85F9-6CCAD58D438A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B92D2381-0D5F-4B45-B0FA-CF0F85A5D9E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B92D2381-0D5F-4B45-B0FA-CF0F85A5D9E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B92D2381-0D5F-4B45-B0FA-CF0F85A5D9E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B92D2381-0D5F-4B45-B0FA-CF0F85A5D9E8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
