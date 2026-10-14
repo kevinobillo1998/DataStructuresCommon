@@ -69,6 +69,41 @@ public class BSTTests
     }
 
     [Test]
+    public void TestIterator()
+    {
+        string traversalString = "";
+        // Test Pre-Order:
+        // Visit the root
+        // Iterate on left subtree
+        // Iterate on Right subtree
+        iBST.Iterate(AddToString, TRAVERSALORDER.PRE_ORDER);
+        Assert.AreEqual("50-20-27-22-77-90-89-91-", traversalString);
+
+
+        // InOrder:
+        // Iterate on Left Subtree
+        //Visit on the root
+        // Iterate on the right subtree
+        traversalString = "";
+        iBST.Iterate(AddToString, TRAVERSALORDER.IN_ORDER);
+        Assert.AreEqual("20-22-27-50-77-89-90-91-", traversalString);
+
+        // Post-Order:
+        // Iterate on left subtree
+        // Visit on the root
+        // Iterate on the right subtree
+        traversalString = "";
+        iBST.Iterate(AddToString, TRAVERSALORDER.POST_ORDER);
+        Assert.AreEqual("22-27-20-89-91-90-77-50", traversalString);
+
+
+        void AddToString(int i )
+        {
+            traversalString += i.ToString() + "-";
+        }
+    }
+
+    [Test]
     public void TestBSTDepthFirstEnumerator()
     {
         // Default enumerator is Depth first:
@@ -96,6 +131,38 @@ public class BSTTests
         Assert.AreEqual(91, myEnum.Current);
         // May as well dispose at the end:
         myEnum.Dispose();
+    }
+
+    [Test]
+    public void TestBSTBreadthFirstEnumerator()
+    {
+        //Grab the Breadth First Enumerator()
+        IEnumerator<int> myEnum = iBST.GetBreadthFirstEnumerator();
+        myEnum.Reset();
+        Assert.IsTrue(myEnum.MoveNext());
+        Assert.AreEqual(50, myEnum.Current);
+        //Assume left child is visited first
+        Assert.IsTrue(myEnum.MoveNext());
+        Assert.AreEqual(20, myEnum.Current);
+        Assert.IsTrue(myEnum.MoveNext());
+        Assert.AreEqual(77, myEnum.Current);
+        Assert.IsTrue(myEnum.MoveNext());
+        Assert.AreEqual(27, myEnum.Current);
+        Assert.IsTrue(myEnum.MoveNext());
+        Assert.AreEqual(90, myEnum.Current);
+        Assert.IsTrue(myEnum.MoveNext());
+        Assert.AreEqual(22, myEnum.Current);
+        Assert.IsTrue(myEnum.MoveNext());
+        Assert.AreEqual(89, myEnum.Current);
+        Assert.IsTrue(myEnum.MoveNext());
+        Assert.AreEqual(91, myEnum.Current);
+        //We've enumerated the whole tree, so movenext should return false:
+        Assert.IsFalse(myEnum.MoveNext());
+        //We should remain on the last visited element:
+        Assert.AreEqual(91, myEnum.Current);
+        //Finally, use the Dispose:
+        myEnum.Dispose();
+
     }
 
     [Test]

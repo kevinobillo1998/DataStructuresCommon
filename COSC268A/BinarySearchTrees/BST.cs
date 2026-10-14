@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
@@ -200,7 +201,12 @@ public class BST<T> : A_BST<T>, ICloneable where T : IComparable<T>
     // If there is only a root node and no children, the height will be 0
     public override IEnumerator<T> GetEnumerator()
     {
-        throw new NotImplementedException();
+        return new DepthFirstEnumerator(this);
+    }
+
+    public IEnumerator<T> GetBreadthFirstEnumerator()
+    {
+        return new BreadthFirstEnumerator(this);
     }
 
     // The height of the tree is the number of edges from the deepest leaf node
@@ -244,7 +250,52 @@ public class BST<T> : A_BST<T>, ICloneable where T : IComparable<T>
 
     public override void Iterate(ProcessData<T> pd, TRAVERSALORDER order)
     {
-        throw new NotImplementedException();
+        if (nRoot != null)
+        {
+            recIterate(nRoot, pd, order);
+        }
+
+    }
+
+    private void recIterate(Node<T> nCurrent, ProcessData<T> pd, TRAVERSALORDER to)
+    {
+        //PRE:ORDER
+        // First Run pd with the root node
+        
+        
+
+        if (to == TRAVERSALORDER.PRE_ORDER)
+        {
+            pd(nCurrent.Data);
+        }
+
+        // Then iterate on the left subtree
+        if (nCurrent.Left != null)
+        {
+     
+           recIterate(nCurrent.Left, pd, to);
+           
+        }
+
+        //IN-ORDER:
+        // Run pd on the root between on the left and right:
+        if (to == TRAVERSALORDER.IN_ORDER) 
+        {
+            pd(nCurrent.Data);
+        }
+
+        // Then iterate on the right subtree
+        if (nCurrent.Right != null)
+        {
+            recIterate(nCurrent.Right, pd, to);
+        }
+
+        //In-Order:
+       if(nCurrent.Left != null)
+        {
+            pd(nCurrent.Data);
+        }
+        
     }
 
     public override bool Remove(T data)
@@ -317,4 +368,152 @@ public class BST<T> : A_BST<T>, ICloneable where T : IComparable<T>
     {
         return "Tree : " + nRoot;
     }
+
+    class DepthFirstEnumerator : IEnumerator<T>
+    {
+        // Store a reference to the tree we're enumerating:
+        protected BST<T> tree;
+        // Keep track of the current node inside the tree we're looking at:
+        protected Node<T> nCurrent = null;
+        // Keep track of the future nodes to visit. Because I want to do this 
+        // in a First In Last Out manner, that means we want a stack:
+        protected Stack<Node<T>> sNodes;
+        public T Current => throw new NotImplementedException();
+
+        object IEnumerator.Current => Current;
+
+        public DepthFirstEnumerator(BST<T> tree)
+        {
+            this.tree = tree;
+            Reset();
+        }
+
+        public void Dispose()
+        {
+            tree = null;
+            nCurrent = null;
+            sNodes = null;
+        }
+
+        public bool MoveNext()
+        {
+            //Keep track of if we were able to move:
+            bool bFound = false;
+
+            // If theres anything left in the stack (stack has a count property
+            // we can check)
+            //That means we *can* move to the next item
+            //  We'll grab the next node from the stack as our new current
+            //  If that node has any children, we'add add them to the stack
+            //      First Right, then left
+            // Return whether or not we were able to move
+            if(sNodes.Count > 0)
+            {
+                bFound = true;
+
+                nCurrent = sNodes.Pop();
+
+                if(nCurrent.Right != null)
+                {
+                    sNodes.Push(nCurrent.Right);
+                }
+                if(nCurrent.Left != null)
+                {
+                    sNodes.Push(nCurrent.Left);
+                }
+            }
+            
+
+            return bFound;
+        }
+
+        public void Reset()
+        {
+            sNodes = new Stack<Node<T>>();
+            // Remember that upon Reset, an enumerator should be *before*
+            // the first item. Since the tack is the list of items to visit in
+            // the future, if we put the root on the stack that means we're before
+            // the first item:
+            if(tree.nRoot == null)
+            {
+                sNodes.Push(tree.nRoot);
+            }
+        }
+    }
+
+    class BreadthFirstEnumerator : IEnumerator<T>
+    {
+        // Store a reference to the tree we're enumerating:
+        protected BST<T> tree;
+        // Keep track of the current node inside the tree we're looking at:
+        protected Node<T> nCurrent = null;
+        // Keep track of the future nodes to visit. Because I want to do this 
+        // in a First In Last Out manner, that means we want a stack:
+        protected Stack<Node<T>> qNodes;
+        public T Current => throw new NotImplementedException();
+
+        object IEnumerator.Current => Current;
+
+        public BreadthFirstEnumerator(BST<T> tree)
+        {
+            this.tree = tree;
+            Reset();
+        }
+
+        public void Dispose()
+        {
+            tree = null;
+            nCurrent = null;
+            qNodes = null;
+        }
+
+        public bool MoveNext()
+        {
+            //Keep track of if we were able to move:
+            bool bFound = false;
+
+            // If theres anything left in the stack (stack has a count property
+            // we can check)
+            //That means we *can* move to the next item
+            //  We'll grab the next node from the stack as our new current
+            //  If that node has any children, we'add add them to the stack
+            //      First Right, then left
+            // Return whether or not we were able to move
+            if (qNodes.Count > 0)
+            {
+                bFound = true;
+
+                nCurrent = qNodes.Dequeue();
+
+                
+                if (nCurrent.Left != null)
+                {
+                    qNodes.Enqueue(nCurrent.Left);
+                }
+                if (nCurrent.Right != null)
+                {
+                    qNodes.Enqueue(nCurrent.Right);
+                }
+
+            }
+            
+
+            return bFound;
+        }
+
+        public void Reset()
+        {
+            qNodes = new Stack<Node<T>>();
+            // Remember that upon Reset, an enumerator should be *before*
+            // the first item. Since the tack is the list of items to visit in
+            // the future, if we put the root on the stack that means we're before
+            // the first item:
+            if (tree.nRoot == null)
+            {
+                qNodes.Enqueue(tree.nRoot);
+            }
+        }
+    }
+
+
 }
